@@ -23,7 +23,7 @@ export const Blogs = () => {
   const [newBlogs, setNewBlogs] = useState<Blog[]>([])
   const [isCheckingNewBlogs, setIsCheckingNewBlogs] = useState(false)
 
-  const { data, isLoading, error, isError, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useBlogs()
+  const { data, isLoading, error, isError, fetchNextPage, hasNextPage, isFetchingNextPage} = useBlogs()
 
   // Function to directly fetch the latest blogs from the API
   const fetchLatestBlogs = useCallback(async () => {

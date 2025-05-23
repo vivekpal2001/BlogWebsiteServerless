@@ -47,10 +47,6 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         password: "",
     })
 
-    const { mutate: createBlog } = useCreateBlog();
-
-    // Get the redirect path from location state or default to /blogs
-    const from = (location.state as any)?.from?.pathname || "/blogs"
 
     const validateField = (field: keyof SignupInput, value: string) => {
         try {

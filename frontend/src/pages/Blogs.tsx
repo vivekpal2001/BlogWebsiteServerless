@@ -5,8 +5,8 @@ import { Appbar } from "../components/Appbar"
 import { BlogCard } from "../components/BlogCard"
 import { Spinner } from "../components/Spinner"
 import { useEffect, useRef, useCallback, useState } from "react"
-import axios from "axios" // Make sure axios is imported
-import { BACKEND_URL } from "../config" // Import your backend URL
+import axios from "axios"
+import { BACKEND_URL } from "../config"
 
 interface Blog {
   id: string
@@ -19,11 +19,10 @@ interface Blog {
 }
 
 export const Blogs = () => {
-  // State to store newly fetched blogs that aren't in the main list yet
   const [newBlogs, setNewBlogs] = useState<Blog[]>([])
   const [isCheckingNewBlogs, setIsCheckingNewBlogs] = useState(false)
 
-  const { data, isLoading, error, isError, fetchNextPage, hasNextPage, isFetchingNextPage} = useBlogs()
+  const { data, isLoading, error, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useBlogs()
 
   // Function to directly fetch the latest blogs from the API
   const fetchLatestBlogs = useCallback(async () => {
@@ -31,35 +30,28 @@ export const Blogs = () => {
 
     setIsCheckingNewBlogs(true)
     try {
-      // Get the token from localStorage
       const token = localStorage.getItem("token")
       if (!token) return
 
-      // Fetch the latest blogs directly from your API
       const response = await axios.get(`${BACKEND_URL}/api/v1/blog`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
         params: {
-          limit: 10, // Adjust based on your API
+          limit: 10,
           offset: 0,
         },
       })
 
       const latestBlogs = response.data
-
-      // Get current blogs from the cache
       const currentBlogs = data?.pages[0] || []
 
-      // Filter out blogs that are already in the current list
       const trulyNewBlogs = latestBlogs.filter(
         (newBlog: Blog) => !currentBlogs.some((existingBlog: Blog) => existingBlog.id === newBlog.id),
       )
 
-      // If we have new blogs, update our state
       if (trulyNewBlogs.length > 0) {
         setNewBlogs((prev) => {
-          // Combine with any existing new blogs, avoiding duplicates
           const combinedBlogs = [...prev]
 
           trulyNewBlogs.forEach((blog: Blog) => {
@@ -78,16 +70,11 @@ export const Blogs = () => {
     }
   }, [data, isCheckingNewBlogs])
 
-  // Set up polling for new blogs every 15 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      fetchLatestBlogs()
-    }, 15000)
-
+    const interval = setInterval(fetchLatestBlogs, 15000)
     return () => clearInterval(interval)
   }, [fetchLatestBlogs])
 
-  // Create a ref for the last blog element
   const observer = useRef<IntersectionObserver>()
   const lastBlogRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -96,7 +83,6 @@ export const Blogs = () => {
 
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          console.log("Loading next page of blogs...")
           fetchNextPage()
         }
       })
@@ -106,30 +92,22 @@ export const Blogs = () => {
     [isLoading, hasNextPage, isFetchingNextPage, fetchNextPage],
   )
 
-  // Flatten all pages of blogs
   const cachedBlogs = data?.pages.flat() || []
 
-  // Combine new blogs with cached blogs
   const allBlogs = [
     ...newBlogs,
     ...cachedBlogs.filter((cachedBlog: Blog) => !newBlogs.some((newBlog) => newBlog.id === cachedBlog.id)),
   ]
 
-  console.log("All blogs:", allBlogs)
-
-  // Function to clear new blogs and trigger a full refetch
   const handleRefreshAll = () => {
     window.location.reload()
   }
 
-  // Function to incorporate new blogs into the main view
   const handleShowNewBlogs = () => {
-    // We're already showing them, but this clears the "New blogs" notification
     setNewBlogs([])
   }
 
   if (isLoading) {
-    console.log("Blogs component is loading...")
     return (
       <div className="min-h-screen bg-gray-50">
         <Appbar />
@@ -144,12 +122,6 @@ export const Blogs = () => {
     const errorMessage = error instanceof Error ? error.message : "Failed to load blogs"
     const statusCode = (error as any)?.response?.status
     const errorData = (error as any)?.response?.data
-
-    console.error("Blogs component error:", {
-      message: errorMessage,
-      statusCode,
-      errorData,
-    })
 
     return (
       <div className="min-h-screen bg-gray-50">

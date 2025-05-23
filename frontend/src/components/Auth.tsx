@@ -1,13 +1,12 @@
 "use client"
 
 import { type ChangeEvent, useState } from "react"
-import { Link, useNavigate, useLocation } from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 import type { SignupInput } from "@vkpal2001/medium-blog"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
 import { Spinner } from "../components/Spinner"
 import { z } from "zod"
-import { useCreateBlog } from "../hooks/useQueries"
 
 // Define validation schemas
 const emailSchema = z.string().email("Please enter a valid email address")
@@ -37,7 +36,6 @@ type ValidationErrors = {
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     const navigate = useNavigate()
-    const location = useLocation()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>({})

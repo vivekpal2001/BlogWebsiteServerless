@@ -7,6 +7,7 @@ import { Blogs } from "./pages/Blogs";
 import { Publish } from './pages/Publish';
 import { Landing } from './pages/Landing';
 import { EditProfile } from './pages/EditProfile';
+import { MyBlogs } from './pages/MyBlogs';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 // Create a client with improved caching
@@ -33,6 +34,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/blog/:id" element={<ProtectedRoute><Blog /></ProtectedRoute>} />
           <Route path="/blogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
+          <Route path="/my-blogs" element={<ProtectedRoute><MyBlogs /></ProtectedRoute>} />
           <Route path="/publish" element={<ProtectedRoute><Publish /></ProtectedRoute>} />
           <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
         </Routes>

@@ -23,6 +23,7 @@ export const queryKeys = {
     blogs: 'blogs',
     blog: (id: string) => ['blog', id],
     user: 'user',
+    myBlogs: 'myBlogs',
 };
 
 // Custom hook for fetching blogs with infinite scroll
@@ -191,4 +192,117 @@ export const useCreateBlog = () => {
             queryClient.invalidateQueries({ queryKey: [queryKeys.blogs] });
         },
     });
-}; 
+};
+
+// Custom hook for fetching user's own blogs
+export const useMyBlogs = () => {
+    return useQuery({
+        queryKey: [queryKeys.myBlogs],
+        queryFn: async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) throw new Error('No token found');
+                
+                const response = await axios.get(`${BACKEND_URL}/api/v1/blog/my`, {
+                    headers: {
+                        'Authorization': token,
+                        
+                    }
+                });
+
+                if (response.data && typeof response.data === 'object' && 'blogs' in response.data) {
+                    return response.data.blogs;
+                }
+                
+                if (Array.isArray(response.data)) {
+                    return response.data;
+                }
+                
+                throw new Error('Invalid response format from blogs API');
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios error details:', {
+                        status: error.response?.status,
+                        data: error.response?.data,
+                        headers: error.response?.headers
+                    });
+                }
+                throw error;
+            }
+        },
+        staleTime: 1000 * 60 * 5,
+        gcTime: 1000 * 60 * 30,
+        retry: 1,
+    });
+};
+
+// Custom hook for updating a blog
+export const useUpdateBlog = () => {
+    const queryClient = useQueryClient();
+    
+    return useMutation({
+        mutationFn: async ({ id, data }: { id: string; data: { title: string; content: string } }) => {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('No token found');
+            
+            try {
+                const response = await axios.put(
+                    `${BACKEND_URL}/api/v1/blog/${id}`,
+                    data,
+                    {
+                        headers: {
+                            'Authorization': token,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+                return response.data;
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    console.error('Update blog error:', {
+                        status: error.response?.status,
+                        data: error.response?.data,
+                        url: error.config?.url,
+                        method: error.config?.method
+                    });
+                    // Re-throw with more specific error message
+                    throw new Error(error.response?.data?.message || 'Failed to update blog');
+                }
+                throw error;
+            }
+        },
+        onSuccess: (_, { id }) => {
+            // Invalidate and refetch related queries
+            queryClient.invalidateQueries({ queryKey: [queryKeys.blogs] });
+            queryClient.invalidateQueries({ queryKey: [queryKeys.myBlogs] });
+            queryClient.invalidateQueries({ queryKey: queryKeys.blog(id) });
+        },
+        onError: (error) => {
+            console.error('Update blog mutation error:', error);
+        }
+    });
+};
+
+// Custom hook for deleting a blog
+export const useDeleteBlog = () => {
+    const queryClient = useQueryClient();
+    
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('No token found');
+            
+            await axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`, {
+                headers: {
+                    Authorization: token
+                }
+            });
+            return id;
+        },
+        onSuccess: (id) => {
+            queryClient.invalidateQueries({ queryKey: [queryKeys.blogs] });
+            queryClient.invalidateQueries({ queryKey: [queryKeys.myBlogs] });
+            queryClient.removeQueries({ queryKey: queryKeys.blog(id) });
+        },
+    });
+};

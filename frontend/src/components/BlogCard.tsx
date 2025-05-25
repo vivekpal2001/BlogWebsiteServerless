@@ -20,30 +20,30 @@ export const BlogCard = ({
     const readingTime = Math.ceil(wordCount / 200);
 
     return (
-        <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
             <div className="p-6">
                 <div className="flex items-center mb-4">
-                    <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center text-white font-medium shadow-sm">
+                    <div className="w-10 h-10 rounded-full bg-black dark:bg-gray-600 flex items-center justify-center text-white font-medium shadow-sm">
                         {authorName[0].toUpperCase()}
                     </div>
                     <div className="ml-3">
-                        <p className="text-sm font-semibold text-gray-900">{authorName}</p>
+                        <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">{authorName}</p>
                         <div className="flex items-center space-x-2">
-                            <p className="text-xs text-gray-500">{publishedDate}</p>
-                            <span className="text-gray-300">•</span>
-                            <p className="text-xs text-gray-500">{readingTime} min read</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">{publishedDate}</p>
+                            <span className="text-gray-300 dark:text-gray-600">•</span>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">{readingTime} min read</p>
                         </div>
                     </div>
                 </div>
                 
                 <Link to={`/blog/${id}`} className="block group">
-                    <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
                         {title}
                     </h2>
-                    <p className="text-gray-600 line-clamp-3 mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
                         {content}
                     </p>
-                    <div className="flex items-center text-gray-900 font-medium group-hover:text-gray-700 transition-colors">
+                    <div className="flex items-center text-gray-900 dark:text-gray-100 font-medium group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
                         Read more
                         <svg 
                             className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" 
@@ -73,8 +73,8 @@ export function Circle() {
 
 export function Avatar({ name, size = "small" }: { name: string, size?: "small" | "big" }) {
     return (
-        <div className={`relative inline-flex items-center justify-center overflow-hidden bg-black rounded-full ${size === "small" ? "w-6 h-6" : "w-10 h-10"}`}>
-            <span className={`${size === "small" ? "text-xs" : "text-md"} font-medium text-white`}>
+        <div className={`relative inline-flex items-center justify-center overflow-hidden bg-black dark:bg-gray-600 rounded-full ${size === "small" ? "w-6 h-6" : "w-10 h-10"}`}>
+            <span className={`${size === "small" ? "text-xs" : "text-md"} font-medium text-white dark:text-gray-100`}>
                 {name[0].toUpperCase()}
             </span>
         </div>

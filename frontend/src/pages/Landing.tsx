@@ -4,7 +4,7 @@ import { LandingAppbar } from "../components/LandingAppbar";
 
 export const Landing = () => {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white dark:bg-gray-900">
             <LandingAppbar />
             
             {/* Hero Section */}
@@ -14,17 +14,17 @@ export const Landing = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl"
+                        className="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl"
                     >
                         <span className="block">Share your developer insights with</span>
-                        <span className="block text-green-600">the tech community</span>
+                        <span className="block text-green-600 dark:text-green-500">the tech community</span>
                     </motion.h1>
                     
                     <motion.p 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
+                        className="mt-3 max-w-md mx-auto text-base text-gray-500 dark:text-gray-400 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
                     >
                         Join DevScribble to share your unique approaches to problem-solving, tech updates, and coding insights. Connect with fellow developers and grow your technical expertise.
                     </motion.p>
@@ -73,11 +73,11 @@ export const Landing = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.8 + index * 0.2 }}
-                                className="relative p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                                className="relative p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
                             >
                                 <div className="text-4xl mb-4">{feature.icon}</div>
-                                <h3 className="text-lg font-medium text-gray-900">{feature.title}</h3>
-                                <p className="mt-2 text-base text-gray-500">{feature.description}</p>
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">{feature.title}</h3>
+                                <p className="mt-2 text-base text-gray-500 dark:text-gray-400">{feature.description}</p>
                             </motion.div>
                         ))}
                     </div>

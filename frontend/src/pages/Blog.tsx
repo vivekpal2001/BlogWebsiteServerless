@@ -15,7 +15,7 @@ export const Blog = () => {
         return <div>
             <Appbar />
         
-            <div className="h-screen flex flex-col justify-center">
+            <div className="h-screen flex flex-col justify-center bg-gray-50 dark:bg-gray-900">
                 
                 <div className="flex justify-center">
                     <Spinner />

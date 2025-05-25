@@ -109,7 +109,7 @@ export const Blogs = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Appbar />
         <div className="flex justify-center items-center h-[calc(100vh-64px)]">
           <Spinner />
@@ -124,17 +124,17 @@ export const Blogs = () => {
     const errorData = (error as any)?.response?.data
 
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Appbar />
         <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-red-800 mb-2">Error Loading Blogs</h3>
-            <p className="text-red-700">{errorMessage}</p>
-            {statusCode && <p className="text-sm text-red-600 mt-1">Status Code: {statusCode}</p>}
-            {errorData && <p className="text-sm text-red-600 mt-1">Error Details: {JSON.stringify(errorData)}</p>}
+          <div className="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-4">
+            <h3 className="text-lg font-medium text-red-800 dark:text-red-200 mb-2">Error Loading Blogs</h3>
+            <p className="text-red-700 dark:text-red-100">{errorMessage}</p>
+            {statusCode && <p className="text-sm text-red-600 dark:text-red-200 mt-1">Status Code: {statusCode}</p>}
+            {errorData && <p className="text-sm text-red-600 dark:text-red-200 mt-1">Error Details: {JSON.stringify(errorData)}</p>}
             <button
               onClick={handleRefreshAll}
-              className="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"
+              className="mt-4 px-4 py-2 bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-100 rounded-md hover:bg-red-200 dark:hover:bg-red-700 transition-colors"
             >
               Try Again
             </button>
@@ -145,18 +145,18 @@ export const Blogs = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Appbar />
       <div className="max-w-4xl mx-auto px-4 py-8">
         {newBlogs.length > 0 && (
-          <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex justify-between items-center">
-            <p className="text-blue-700">
+          <div className="mb-6 bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 flex justify-between items-center">
+            <p className="text-blue-700 dark:text-blue-200">
               {newBlogs.length} new blog{newBlogs.length > 1 ? "s" : ""} available!
             </p>
             <div className="flex space-x-2">
               <button
                 onClick={handleShowNewBlogs}
-                className="px-4 py-2 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors flex items-center"
+                className="px-4 py-2 bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 rounded-md hover:bg-blue-200 dark:hover:bg-blue-700 transition-colors flex items-center"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +171,7 @@ export const Blogs = () => {
               </button>
               <button
                 onClick={handleRefreshAll}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
               >
                 Refresh All
               </button>
@@ -204,12 +204,12 @@ export const Blogs = () => {
           </div>
         ) : (
           <div className="text-center py-12">
-            <h2 className="text-2xl font-semibold text-gray-900">No blogs yet</h2>
-            <p className="mt-2 text-gray-600">Be the first to write a blog!</p>
+            <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">No blogs yet</h2>
+            <p className="mt-2 text-gray-600 dark:text-gray-300">Be the first to write a blog!</p>
             <div className="mt-4">
               <button
                 onClick={handleRefreshAll}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
               >
                 Refresh
               </button>

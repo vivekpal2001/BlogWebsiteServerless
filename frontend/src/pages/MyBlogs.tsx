@@ -67,7 +67,7 @@ export const MyBlogs = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
                 <Appbar />
                 <div className="flex justify-center items-center h-[calc(100vh-64px)]">
                     <Spinner />
@@ -78,15 +78,15 @@ export const MyBlogs = () => {
 
     if (isError) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
                 <Appbar />
                 <div className="max-w-4xl mx-auto px-4 py-8">
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <h3 className="text-lg font-medium text-red-800 mb-2">Error Loading Blogs</h3>
-                        <p className="text-red-700">{error instanceof Error ? error.message : "Failed to load blogs"}</p>
+                    <div className="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-4">
+                        <h3 className="text-lg font-medium text-red-800 dark:text-red-200 mb-2">Error Loading Blogs</h3>
+                        <p className="text-red-700 dark:text-red-100">{error instanceof Error ? error.message : "Failed to load blogs"}</p>
                         <button
                             onClick={() => window.location.reload()}
-                            className="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"
+                            className="mt-4 px-4 py-2 bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-100 rounded-md hover:bg-red-200 dark:hover:bg-red-700 transition-colors"
                         >
                             Try Again
                         </button>
@@ -97,17 +97,17 @@ export const MyBlogs = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             <Appbar />
             <div className="max-w-4xl mx-auto px-4 py-8">
 
                 {!blogs || blogs.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow-md">
-                        <h2 className="text-2xl font-semibold text-gray-900">No blogs yet</h2>
-                        <p className="mt-2 text-gray-600">Start writing your first blog!</p>
+                    <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
+                        <h2 className="text-2xl font-semibold">No blogs yet</h2>
+                        <p className="mt-2 text-gray-600 dark:text-gray-300">Start writing your first blog!</p>
                         <button
                             onClick={() => navigate("/publish")}
-                            className="mt-4 px-4 py-2 bg-black text-white rounded-md hover:bg-black transition-colors"
+                            className="mt-4 px-4 py-2 bg-black text-white rounded-md hover:bg-black transition-colors dark:bg-gray-700 dark:hover:bg-gray-600"
                         >
                             Create Blog
                         </button>
@@ -115,21 +115,21 @@ export const MyBlogs = () => {
                 ) : (
                     <div className="space-y-6">
                       {blogs.map((blog: Blog) => (
-                        <div key={blog.id} className="bg-white rounded-lg shadow-md p-6">
+                        <div key={blog.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                           {editingBlog?.id === blog.id ? (
                             <div className="space-y-4">
                               <input
                                 type="text"
                                 value={editTitle}
                                 onChange={(e) => setEditTitle(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                                 placeholder="Blog title"
                                 disabled={updateBlog.isPending}
                               />
                               <textarea
                                 value={editContent}
                                 onChange={(e) => setEditContent(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black min-h-[200px]"
+                                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-blue-500 min-h-[200px] bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                                 placeholder="Blog content"
                                 disabled={updateBlog.isPending}
                               />
@@ -140,7 +140,7 @@ export const MyBlogs = () => {
                                     setEditTitle("")
                                     setEditContent("")
                                   }}
-                                  className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                                  className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
                                   disabled={updateBlog.isPending}
                                 >
                                   Cancel
@@ -148,7 +148,7 @@ export const MyBlogs = () => {
                                 <button
                                   onClick={handleUpdate}
                                   disabled={updateBlog.isPending || !editTitle.trim() || !editContent.trim()}
-                                  className="px-4 py-2 bg-black text-white rounded-md hover:bg-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                                  className="px-4 py-2 bg-black text-white rounded-md hover:bg-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-700 dark:hover:bg-gray-600"
                                 >
                                   {updateBlog.isPending ? (
                                     <>
@@ -163,21 +163,21 @@ export const MyBlogs = () => {
                             </div>
                           ) : (
                             <>
-                              <h2 className="text-2xl font-bold text-gray-900 mb-2">{blog.title}</h2>
-                              <p className="text-gray-600 mb-4">{blog.content}</p>
+                              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{blog.title}</h2>
+                              <p className="text-gray-600 dark:text-gray-300 mb-4">{blog.content}</p>
                               <div className="flex justify-between items-center">
-                                <div className="text-sm text-gray-500">{new Date(blog.createdAt).toLocaleDateString()}</div>
+                                <div className="text-sm text-gray-500 dark:text-gray-400">{new Date(blog.createdAt).toLocaleDateString()}</div>
                                 <div className="flex space-x-2">
                                   <button
                                     onClick={() => handleEdit(blog)}
-                                    className="px-3 py-1 text-black hover:text-black transition-colors"
+                                    className="px-3 py-1 text-black dark:text-gray-200 hover:text-black dark:hover:text-gray-400 transition-colors"
                                     disabled={deleteBlog.isPending}
                                   >
                                     Edit
                                   </button>
                                   <button
                                     onClick={() => handleDelete(blog.id)}
-                                    className="px-3 py-1 text-red-600 hover:text-red-800 transition-colors"
+                                    className="px-3 py-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-600 transition-colors"
                                     disabled={deleteBlog.isPending}
                                   >
                                     {deleteBlog.isPending ? "Deleting..." : "Delete"}

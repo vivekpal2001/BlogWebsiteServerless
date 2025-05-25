@@ -44,7 +44,7 @@ export const ProfileDropdown = ({ size = "big" }: ProfileDropdownProps) => {
 
     if (isLoading) {
         return (
-            <div className={`w-${size === "small" ? "6" : "10"} h-${size === "small" ? "6" : "10"} rounded-full bg-gray-200 animate-pulse`} />
+            <div className={`w-${size === "small" ? "6" : "10"} h-${size === "small" ? "6" : "10"} rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse`} />
         );
     }
 
@@ -74,23 +74,23 @@ export const ProfileDropdown = ({ size = "big" }: ProfileDropdownProps) => {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-10">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                        <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                        <p className="text-sm text-gray-500">{user.username}</p>
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-1 z-10">
+                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-700">
+                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.name}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{user.username}</p>
                     </div>
                     <button
                         onClick={() => {
                             setIsOpen(false);
                             navigate("/edit-profile");
                         }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                         Edit Profile
                     </button>
                     <button
                         onClick={handleLogout}
-                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                         Sign out
                     </button>

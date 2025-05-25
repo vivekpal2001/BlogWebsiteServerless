@@ -18,8 +18,8 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     // If we're still loading the user data, show loading state
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex justify-center items-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex justify-center items-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-gray-100 dark:border-t-blue-500"></div>
             </div>
         );
     }

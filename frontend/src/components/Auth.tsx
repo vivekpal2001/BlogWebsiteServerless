@@ -128,14 +128,14 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     }
 
     return (
-        <div className="h-screen flex justify-center flex-col">
+        <div className="h-screen flex justify-center flex-col bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             <div className="flex justify-center">
                 <div>
                     <div className="px-10">
                         <div className="text-3xl font-extrabold">
                             {type === "signup" ? "Create an account" : "Sign in to your account"}
                         </div>
-                        <div className="text-slate-500">
+                        <div className="text-slate-500 dark:text-slate-400">
                             {type === "signup" 
                                 ? "Already have an account? " 
                                 : "Don't have an account? "}
@@ -208,12 +208,12 @@ interface LabelledInputProps {
 function LabelledInput({ label, placeholder, type = "text", name, onChange, error }: LabelledInputProps) {
     return (
         <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium text-gray-900">{label}</label>
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">{label}</label>
             <input
                 type={type}
                 name={name}
                 onChange={onChange}
-                className={`bg-gray-50 border ${error ? 'border-red-500' : 'border-gray-300'} text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
+                className={`bg-gray-50 border ${error ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:focus:ring-blue-600 dark:focus:border-blue-600`}
                 placeholder={placeholder}
             />
             {error && (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
-import { CommentSkeleton } from './CommentSkeleton';
+
 
 interface Comment {
   id: number;
@@ -43,6 +43,7 @@ const CommentModal: React.FC<CommentModalProps> = ({ blogId, isOpen, onClose, cu
   }, [blogId, isOpen]);
 
   const handleAddComment = async () => {
+    setIsPosting(true);
     if (!newComment.trim()) return;
     await fetch('/api/v1/blog/comment', {
       method: 'POST',
@@ -100,11 +101,11 @@ const CommentModal: React.FC<CommentModalProps> = ({ blogId, isOpen, onClose, cu
     e.preventDefault();
     if (!newComment.trim() || isPosting) return;
 
-    setIsPosting(true);
+    // setIsPosting(true);
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        setIsPosting(false);
+        // setIsPosting(false);
         return;
       }
 
@@ -191,10 +192,10 @@ const CommentModal: React.FC<CommentModalProps> = ({ blogId, isOpen, onClose, cu
           />
           <button
             className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 disabled:opacity-50"
-            onClick={handleSubmit}
+            onClick={handleAddComment}
             disabled={isPosting}
           >
-            {isPosting ? 'Posting...' : 'Post'}
+            {isPosting ? 'Post' : 'Posting...'}
           </button>
         </div>
       </div>

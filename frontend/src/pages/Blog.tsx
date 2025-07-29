@@ -24,6 +24,6 @@ export const Blog = () => {
         </div>
     }
     return <div>
-        <FullBlog blog={blog} />
+        <FullBlog />
     </div>
 }

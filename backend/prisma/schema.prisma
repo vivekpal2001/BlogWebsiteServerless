@@ -9,18 +9,78 @@ datasource db {
 }
 
 model User {
-  id  Int    @id @default(autoincrement())
-  name    String?
+  id       Int    @id @default(autoincrement())
+  name     String?
   username String @unique
   password String
-  blogs    Blog[]
+  bio      String? // Optional user bio
+  avatar   String? // Optional avatar URL
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  blogs     Blog[]
+  comments  Comment[]
+  likes     Like[]
+  
+  // Following/Followers relationship (many-to-many self-relation)
+  following Follow[] @relation("UserFollowing")
+  followers Follow[] @relation("UserFollowers")
 }
 
 model Blog {
-  id  Int    @id @default(autoincrement())
-  authorId   Int
-  content    String
-  title       String
+  id        Int      @id @default(autoincrement())
+  authorId  Int
+  content   String
+  title     String
   published Boolean  @default(false)
-  author    User @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  publishedAt DateTime? // When the blog was published
+  
+  // Relations
+  author   User      @relation(fields: [authorId], references: [id])
+  comments Comment[]
+  likes    Like[]
+}
+
+model Comment {
+  id       Int      @id @default(autoincrement())
+  content  String
+  blogId   Int
+  authorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  blog   Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id])
+}
+
+model Like {
+  id       Int      @id @default(autoincrement())
+  blogId   Int
+  userId   Int
+  createdAt DateTime @default(now())
+  
+  // Relations
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
+  
+  // Ensure one user can only like a blog once
+  @@unique([blogId, userId])
+}
+
+model Follow {
+  id          Int      @id @default(autoincrement())
+  followerId  Int      // Person who is following
+  followingId Int      // Person being followed
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  follower  User @relation("UserFollowing", fields: [followerId], references: [id])
+  following User @relation("UserFollowers", fields: [followingId], references: [id])
+  
+  // Ensure a user can't follow the same person twice
+  @@unique([followerId, followingId])
 }

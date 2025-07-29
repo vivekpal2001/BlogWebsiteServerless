@@ -6,12 +6,14 @@
   "dependencies": {
     "@prisma/client": "^5.10.2",
     "@prisma/extension-accelerate": "^0.6.3",
-    "@vkpal2001/medium-blog": "^1.0.4",
+    "@vkpal2001/medium-blog": "^1.1.3",
+    "bcrypt": "^6.0.0",
     "hono": "^4.0.8",
     "prisma": "^5.10.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240208.0",
+    "@types/bcrypt": "^5.0.2",
     "wrangler": "^3.25.0"
   }
 }

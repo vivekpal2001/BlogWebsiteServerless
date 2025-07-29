@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://my-app.kumarvivekmailme.workers.dev"
+export const BACKEND_URL = " http://localhost:8787"

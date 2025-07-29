@@ -43,10 +43,14 @@ export const ProfileDropdown = ({ size = "big" }: ProfileDropdownProps) => {
     };
 
     if (isLoading) {
+        const sizeClass = size === 'small' ? 'w-6 h-6' : 'w-10 h-10';
         return (
-            <div className={`w-${size === "small" ? "6" : "10"} h-${size === "small" ? "6" : "10"} rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse`} />
+          <div
+            className={`${sizeClass} rounded-full bg-gray-200 dark:bg-gray-800 animate-pulse`}
+          />
         );
-    }
+      }
+      
 
     if (error || !user) {
         return null;
@@ -82,11 +86,20 @@ export const ProfileDropdown = ({ size = "big" }: ProfileDropdownProps) => {
                     <button
                         onClick={() => {
                             setIsOpen(false);
-                            navigate("/edit-profile");
+                            navigate("/profile");
                         }}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                        Edit Profile
+                        Profile
+                    </button>
+                    <button
+                        onClick={() => {
+                            setIsOpen(false);
+                            navigate("/settings");
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                        Settings
                     </button>
                     <button
                         onClick={handleLogout}

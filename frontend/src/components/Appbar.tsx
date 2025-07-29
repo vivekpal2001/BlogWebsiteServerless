@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { ProfileDropdown } from "./ProfileDropdown"
 import { ThemeToggle } from "./ThemeToggle"
 import { useState } from "react";
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 export const Appbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,9 +29,11 @@ export const Appbar = () => {
                 <Link to={`/publish`}>
                     <button 
                         type="button" 
-                        className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-4 sm:px-5 py-2 text-center transition-colors duration-200"
+                        className="flex items-center justify-center text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-3 sm:px-4 py-2 text-center transition-colors duration-200"
+                        title="Create Blog"
                     >
-                        New
+                        <PlusIcon className="h-5 w-5 mr-1" />
+                        <span className="hidden sm:inline">New</span>
                     </button>
                 </Link>
                 <div className="flex items-center">
@@ -54,8 +56,9 @@ export const Appbar = () => {
                         <Link to={`/my-blogs`} onClick={toggleMobileMenu} className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                             My Blogs
                         </Link>
-                        <Link to={`/publish`} onClick={toggleMobileMenu} className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
-                            New
+                        <Link to={`/publish`} onClick={toggleMobileMenu} className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium flex items-center">
+                            <PlusIcon className="h-5 w-5 mr-1" />
+                            <span>New</span>
                         </Link>
                         <div className="w-full flex justify-center">
                             <ProfileDropdown size="small" />

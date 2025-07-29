@@ -10,6 +10,7 @@ import { EditProfile } from './pages/EditProfile';
 import { MyBlogs } from './pages/MyBlogs';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ThemeProvider } from './ThemeContext';
+import Profile from './pages/Profile';
 
 // Create a client with improved caching
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ function App() {
             <Route path="/blogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
             <Route path="/my-blogs" element={<ProtectedRoute><MyBlogs /></ProtectedRoute>} />
             <Route path="/publish" element={<ProtectedRoute><Publish /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
           </Routes>
         </BrowserRouter>

@@ -14,6 +14,8 @@ export const EditProfile = () => {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [avatar, setAvatar] = useState("");
+    const [bio, setBio] = useState("");
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -32,6 +34,8 @@ export const EditProfile = () => {
 
                 setName(response.data.name || "");
                 setUsername(response.data.username || "");
+                setAvatar(response.data.avatar || "");
+                setBio(response.data.bio || "");
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     if (error.response?.status === 401) {
@@ -68,7 +72,9 @@ export const EditProfile = () => {
                 { 
                     name,
                     username,
-                    password: password || undefined // Only send password if it's not empty
+                    password: password || undefined, // Only send password if it's not empty
+                    avatar,
+                    bio
                 },
                 {
                     headers: {
@@ -133,6 +139,25 @@ export const EditProfile = () => {
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="flex flex-col items-center mb-6">
+                            <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden mb-2">
+                                {avatar ? (
+                                    <img src={avatar} alt="avatar" className="w-full h-full object-cover" />
+                                ) : (
+                                    <span className="text-4xl font-bold text-white bg-black w-full h-full flex items-center justify-center">?</span>
+                                )}
+                            </div>
+                            <input
+                                type="text"
+                                id="avatar"
+                                value={avatar}
+                                onChange={e => setAvatar(e.target.value)}
+                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-blue-500 dark:focus:border-blue-600 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 mt-2"
+                                placeholder="Avatar image URL"
+                                disabled={saving}
+                            />
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Paste an image URL for your avatar.</p>
+                        </div>
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 Name
@@ -148,7 +173,6 @@ export const EditProfile = () => {
                                 disabled={saving}
                             />
                         </div>
-
                         <div>
                             <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 Username
@@ -164,7 +188,20 @@ export const EditProfile = () => {
                                 disabled={saving}
                             />
                         </div>
-
+                        <div>
+                            <label htmlFor="bio" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Bio
+                            </label>
+                            <textarea
+                                id="bio"
+                                value={bio}
+                                onChange={e => setBio(e.target.value)}
+                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-blue-500 dark:focus:border-blue-600 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                placeholder="Tell us about yourself..."
+                                rows={3}
+                                disabled={saving}
+                            />
+                        </div>
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 Password
